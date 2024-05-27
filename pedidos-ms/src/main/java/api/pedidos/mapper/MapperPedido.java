@@ -11,7 +11,8 @@ public class MapperPedido {
 
     public PedidoStatusDTO pedidoEntityToStatusDTO(PedidoEntity pedidoEntity) {
         return PedidoStatusDTO.builder()
-                .nome(pedidoEntity.getNome())
+                .email(pedidoEntity.getEmail())
+                .nome(pedidoEntity.getNomeProduto())
                 .tipo(pedidoEntity.getTipo())
                 .peso(pedidoEntity.getPeso())
                 .status(pedidoEntity.getStatus())
@@ -20,7 +21,8 @@ public class MapperPedido {
 
     public PedidoEntity pedidoDTOToEntity(PedidoDTO pedidoDTO) {
         return PedidoEntity.builder()
-                .nome(pedidoDTO.nome())
+                .email(pedidoDTO.email())
+                .nomeProduto(pedidoDTO.nome())
                 .tipo(pedidoDTO.tipo())
                 .peso(pedidoDTO.peso())
                 .status(StatusPedido.PROCESSANDO)

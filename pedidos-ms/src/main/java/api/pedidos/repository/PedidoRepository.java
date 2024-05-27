@@ -14,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 
+    Optional<PedidoEntity> findByEmail(String email);
+
     @Query("SELECT p from PedidoEntity p WHERE p.status = ?1 ")
     List<PedidoEntity> buscaStatusAtivo(StatusPedido status);
 

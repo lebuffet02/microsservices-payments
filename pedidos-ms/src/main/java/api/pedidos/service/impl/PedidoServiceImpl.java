@@ -3,6 +3,7 @@ package api.pedidos.service.impl;
 import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
+import api.pedidos.exception.EmailException;
 import api.pedidos.exception.PedidosException;
 import api.pedidos.exception.ResponseEnum;
 import api.pedidos.mapper.MapperPedido;
@@ -77,6 +78,12 @@ public class PedidoServiceImpl implements PedidoService {
             return Optional.empty();
         } catch (RuntimeException | Error e) {
             throw new PedidosException(ResponseEnum.ERRO_INTERNO, mensagemError);
+        }
+    }
+
+    private void validateEmailExists(String email) {
+        if(repository.findByEmail(email).isPresent()) {
+            throw new EmailException(ResponseEnum.ERRO_INTERNO, "Email já existe.");
         }
     }
 }

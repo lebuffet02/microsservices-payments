@@ -21,8 +21,11 @@ public class PedidoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
-    private String nome;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "nomeProduto", nullable = false)
+    private String nomeProduto;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;

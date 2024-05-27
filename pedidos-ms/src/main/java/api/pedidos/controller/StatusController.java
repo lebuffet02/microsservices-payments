@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/pedidos/status", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -17,18 +16,18 @@ public class StatusController {
     @Autowired
     StatusServiceImpl service;
 
-    //@PreAuthorize()
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<PedidoStatusDTO>> statusAtivoController(
            @RequestParam("status") StatusPedido statusPedido) {
         return ResponseEntity.ok(service.statusAtivoService(statusPedido));
     }
 
-    //@PreAuthorize()
+    //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<PedidoStatusDTO>> atualizaStatusController(
+    public ResponseEntity<?> atualizaStatusController(
             @PathVariable("id") Long id, @RequestParam("status") StatusPedido statusPedido) {
         service.atualizaStatusService(id, statusPedido);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(204).build();
     }
 }
