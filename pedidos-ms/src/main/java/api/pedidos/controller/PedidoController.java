@@ -1,11 +1,16 @@
 package api.pedidos.controller;
 
 import api.pedidos.dto.PedidoDTO;
+import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.service.PedidoService;
+import api.pedidos.service.impl.PedidoServiceImpl;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -13,25 +18,27 @@ import java.util.Optional;
 public class PedidoController {
 
     @Autowired
-    PedidoService service;
+    PedidoServiceImpl service;
 
     @GetMapping
-    public ResponseEntity<?> getAllController() {
-        return ResponseEntity.ok(service.getAllService());
+    public ResponseEntity<?> getAllController(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        return ResponseEntity.ok(service.getAllService(page, size));
     }
 
     @PostMapping
-    public ResponseEntity<Optional<PedidoDTO>> saveController(@RequestBody PedidoDTO dto) {
+    public ResponseEntity<Optional<PedidoStatusDTO>> saveController(@RequestBody PedidoDTO dto) {
         return ResponseEntity.ok(service.saveService(dto));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Optional<PedidoDTO>> updateController(@PathVariable("id") Long id, @RequestBody PedidoDTO dto) {
+    public ResponseEntity<Optional<PedidoStatusDTO>> updateController(@PathVariable("id") Long id, @RequestBody PedidoDTO dto) {
         return ResponseEntity.ok(service.updateService(id, dto));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PedidoDTO>> getByIdController(
+    public ResponseEntity<Optional<PedidoStatusDTO>> getByIdController(
             @PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getByIdService(id));
     }
