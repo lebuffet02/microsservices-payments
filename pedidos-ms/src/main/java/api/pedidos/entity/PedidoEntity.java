@@ -21,7 +21,7 @@ public class PedidoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "nomeProduto", nullable = false)
@@ -30,7 +30,7 @@ public class PedidoEntity implements Serializable {
     @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "peso", nullable = false)
+    @Column(name = "peso")
     @Positive(message = "Não pode ser negativo.")
     private int peso;
 

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableAsync
 @EnableWebMvc
 @EnableFeignClients
 @EntityScan(basePackages = "api.pedidos.entity")

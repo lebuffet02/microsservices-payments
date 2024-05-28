@@ -1,4 +1,4 @@
-package api.pedidos.dto;
+package api.pedidos.dto.form;
 
 import api.pedidos.exception.EmailException;
 import api.pedidos.exception.PedidosException;

@@ -12,9 +12,6 @@ import api.pedidos.service.StatusService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +24,6 @@ public class StatusServiceImpl implements StatusService {
     MapperPedido mapper;
     @Autowired
     PedidoRepository repository;
-    @Autowired
-    JavaMailSender mailSender;
 
     private static final String SUBJECT = "Pedido realizado com sucesso";
     private static final String MESSAGE = "Pedido realizado com sucesso";
@@ -46,7 +41,6 @@ public class StatusServiceImpl implements StatusService {
         }
     }
 
-    @Async
     @Transactional
     @Override
     public void atualizaStatusService(Long id, StatusPedido statusPedido) {
@@ -55,14 +49,6 @@ public class StatusServiceImpl implements StatusService {
                     .orElseThrow(() -> new PedidosException(ResponseEnum.ERRO_INTERNO, "Id do pedido não foi encontrado."));
             if(!pedidoEntity.getStatus().equals(statusPedido)) {
                 repository.atualizaStatusPedido(statusPedido, id);
-                log.info("toEmail: {} subJect: {} emailMessage: {}", pedidoEntity.getEmail(), SUBJECT, MESSAGE.concat(pedidoEntity.getNomeProduto())
-                        .concat(" foi separado."));
-                SimpleMailMessage mailMessage = new SimpleMailMessage();
-                mailMessage.setFrom("teste@gmail.com");
-                mailMessage.setTo(pedidoEntity.getEmail());
-                mailMessage.setSubject(SUBJECT);
-                mailMessage.setText(MESSAGE.concat(pedidoEntity.getNomeProduto()).concat(" foi separado."));
-                mailSender.send(mailMessage);
             }
         } catch (RuntimeException | Error e) {
             log.error("Exception: ".concat(e.getMessage()));

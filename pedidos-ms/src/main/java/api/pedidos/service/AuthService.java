@@ -1,9 +1,9 @@
 package api.pedidos.service;
 
 
-import api.pedidos.dto.auth.AuthKeycloak;
-import api.pedidos.dto.auth.AuthKeycloakDTO;
-import api.pedidos.dto.auth.RefreshKeycloak;
+import api.pedidos.dto.form.AuthKeycloak;
+import api.pedidos.dto.AuthKeycloakDTO;
+import api.pedidos.dto.form.RefreshKeycloak;
 
 public interface AuthService {
 

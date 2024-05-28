@@ -1,9 +1,9 @@
 package api.pedidos.controller;
 
 import api.pedidos.client.KeycloakClient;
-import api.pedidos.dto.auth.AuthKeycloak;
-import api.pedidos.dto.auth.AuthKeycloakDTO;
-import api.pedidos.dto.auth.RefreshKeycloak;
+import api.pedidos.dto.form.AuthKeycloak;
+import api.pedidos.dto.AuthKeycloakDTO;
+import api.pedidos.dto.form.RefreshKeycloak;
 import api.pedidos.service.impl.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

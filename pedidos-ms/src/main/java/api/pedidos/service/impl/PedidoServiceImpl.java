@@ -1,6 +1,6 @@
 package api.pedidos.service.impl;
 
-import api.pedidos.dto.PedidoDTO;
+import api.pedidos.dto.form.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import api.pedidos.exception.EmailException;
@@ -40,12 +40,12 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Optional<PedidoStatusDTO> saveService(PedidoDTO pedidoDTO) {
-        return getPedidoDTO(pedidoDTO, "Falha ao cadastrar pedido.");
+        return getPedidoDTO(null, pedidoDTO, "Falha ao cadastrar pedido.");
     }
 
     @Transactional
     public Optional<PedidoStatusDTO> updateService(Long id, PedidoDTO pedidoDTO) {
-        return repository.findById(id).isPresent() ? getPedidoDTO(pedidoDTO, "Falha ao atualizar pedido.") : Optional.empty();
+        return (repository.findById(id).isPresent() ? getPedidoDTO(id, pedidoDTO, "Falha ao atualizar pedido.") : Optional.empty());
     }
 
     @Override
@@ -69,21 +69,18 @@ public class PedidoServiceImpl implements PedidoService {
         }
     }
 
-    private Optional<PedidoStatusDTO> getPedidoDTO(PedidoDTO pedidoDTO, String mensagemError) {
+    private Optional<PedidoStatusDTO> getPedidoDTO(Long id, PedidoDTO pedidoDTO, String mensagemError) {
         try {
-            if(!ObjectUtils.isEmpty(pedidoDTO)) {
-                PedidoEntity pedidoEntity = repository.save(mapper.pedidoDTOToEntity(pedidoDTO));
+            if(!ObjectUtils.isEmpty(pedidoDTO) && pedidoDTO.isEmailValid(pedidoDTO.email())) {
+                PedidoEntity pedidoEntity = mapper.pedidoDTOToEntity(pedidoDTO);
+                pedidoEntity.setId(id);
+                repository.save(pedidoEntity);
                 return Optional.of(mapper.pedidoEntityToStatusDTO(pedidoEntity));
             }
             return Optional.empty();
         } catch (RuntimeException | Error e) {
-            throw new PedidosException(ResponseEnum.ERRO_INTERNO, mensagemError);
-        }
-    }
-
-    private void validateEmailExists(String email) {
-        if(repository.findByEmail(email).isPresent()) {
-            throw new EmailException(ResponseEnum.ERRO_INTERNO, "Email já existe.");
+            throw (e instanceof PedidosException) ?  new PedidosException(ResponseEnum.ERRO_INTERNO, mensagemError)
+                    : new EmailException(ResponseEnum.ERRO_INTERNO, e.getMessage());
         }
     }
 }

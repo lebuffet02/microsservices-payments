@@ -1,4 +1,4 @@
-package api.pedidos.dto.auth;
+package api.pedidos.dto.form;
 
 import lombok.Builder;
 

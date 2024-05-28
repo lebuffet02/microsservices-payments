@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/pedidos/status", produces = {MediaType.APPLICATION_JSON_VALUE})
-public class StatusController {
+public class PedidosStatusController {
 
     @Autowired
     StatusServiceImpl service;

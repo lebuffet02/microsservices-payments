@@ -1,4 +1,4 @@
-package api.pedidos.dto.auth;
+package api.pedidos.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
