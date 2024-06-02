@@ -1,6 +1,6 @@
 package api.pedidos.controller;
 
-import api.pedidos.dto.form.PedidoDTO;
+import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.service.impl.PedidoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,16 @@ public class PedidoController {
     //@PreAuthorize("hasRole('USER')")
     @PutMapping("{id}")
     public ResponseEntity<Optional<PedidoStatusDTO>> updateController(@PathVariable("id") Long id, @RequestBody PedidoDTO dto) {
-        return ResponseEntity.ok(service.updateService(id, dto));
+        return service.updateService(id, dto).isPresent() ?
+                ResponseEntity.ok(service.updateService(id, dto)) : ResponseEntity.badRequest().build();
     }
 
     //@PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<PedidoStatusDTO>> getByIdController(
             @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.getByIdService(id));
+        return service.getByIdService(id).isPresent() ? ResponseEntity.ok(service.getByIdService(id))
+                : ResponseEntity.badRequest().build();
     }
 
     //@PreAuthorize("hasRole('USER')")

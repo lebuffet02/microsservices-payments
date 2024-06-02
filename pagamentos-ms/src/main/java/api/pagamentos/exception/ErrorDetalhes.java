@@ -1,4 +1,4 @@
-package api.pagamentos.exception.handler;
+package api.pagamentos.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

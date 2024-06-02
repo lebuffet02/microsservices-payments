@@ -1,7 +1,7 @@
 package api.pedidos.mapper;
 
-import api.pedidos.dto.form.AuthKeycloak;
 import api.pedidos.dto.AuthKeycloakDTO;
+import api.pedidos.dto.form.AuthKeycloak;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -4,8 +4,11 @@ import api.pagamentos.exception.EmailException;
 import api.pagamentos.exception.PagamentosException;
 import api.pagamentos.exception.ResponseEnum;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
+
 import java.util.regex.Matcher;
 
+@Builder
 public record UsuarioDTO(
         @Pattern(regexp = EMAIL_PATTERN)
         String email,

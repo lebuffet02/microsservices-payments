@@ -4,4 +4,11 @@ import api.pedidos.constantes.StatusPedido;
 import lombok.Builder;
 
 @Builder
-public record PedidoStatusDTO(String email, String nome, String tipo, int peso, StatusPedido status){}
+public record PedidoStatusDTO(
+        String id,
+        String email,
+        String nomeProduto,
+        String tipo,
+        double pesoKg,
+        double valor,
+        StatusPedido status){}

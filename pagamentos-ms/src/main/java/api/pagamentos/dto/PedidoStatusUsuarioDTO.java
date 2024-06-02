@@ -4,13 +4,10 @@ import api.pagamentos.constantes.StatusPagamento;
 import lombok.Builder;
 
 @Builder
-public record PagamentoStatusDTO(
-        String id,
-        UsuarioDTO usuarioDTO,
+public record PedidoStatusUsuarioDTO(
+        String email,
         String nomeProduto,
         String tipo,
         double pesoKg,
         double valor,
-        int quantidade,
-        String horario,
-        StatusPagamento status){}
+        StatusPagamento statusPagamento){}

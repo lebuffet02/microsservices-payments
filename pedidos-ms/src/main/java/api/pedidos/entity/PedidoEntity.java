@@ -1,6 +1,7 @@
 package api.pedidos.entity;
 
 import api.pedidos.constantes.StatusPedido;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class PedidoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "nomeProduto", nullable = false)
@@ -32,7 +33,11 @@ public class PedidoEntity implements Serializable {
 
     @Column(name = "peso")
     @Positive(message = "Não pode ser negativo.")
-    private int peso;
+    private double pesoKg;
+
+    @Column(name = "valor")
+    @PositiveOrZero(message = "Não pode ser negativo.")
+    private double valor;
 
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)

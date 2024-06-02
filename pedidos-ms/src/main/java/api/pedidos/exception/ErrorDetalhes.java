@@ -1,4 +1,4 @@
-package api.pedidos.exception.handler;
+package api.pedidos.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,5 +1,8 @@
 package api.pagamentos.dto;
 
+import lombok.Builder;
+
+@Builder
 public record EnderecoDTO(
         String estado,
         String cidade,

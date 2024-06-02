@@ -1,17 +1,44 @@
-package api.pagamentos.service;
+package api.pagamentos.service.impl;
 
+import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.exception.PagamentosException;
+import api.pagamentos.exception.ResponseEnum;
+import api.pagamentos.mapper.MapperPagamento;
+import api.pagamentos.repository.PagamentoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class StatusServiceImpl {
 
-//    @Autowired
-//    JavaMailSender mailSender;
+    @Autowired
+    JavaMailSender mailSender;
+    @Autowired
+    MapperPagamento mapper;
+    @Autowired
+    PagamentoRepository repository;
 
 //    private static final String SUBJECT = "Pagamento realizado com sucesso";
 //    private static final String MESSAGE = "Pagamento realizado com sucesso";
+
+
+    public List<PagamentoStatusDTO> buscarStatusService(StatusPagamento statusPagamento) {
+        try {
+            return repository.buscaStatusAtivo(statusPagamento)
+                    .stream()
+                    .map(p -> mapper.pedidoEntityToStatusDTO(p))
+                    .collect(Collectors.toList());
+        } catch (RuntimeException | Error e) {
+            throw new PagamentosException(ResponseEnum.ERRO_INTERNO, "Falha ao buscar status.");
+        }
+    }
 
 
 //    @Async

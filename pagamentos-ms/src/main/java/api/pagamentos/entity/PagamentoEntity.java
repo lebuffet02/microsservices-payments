@@ -1,6 +1,7 @@
 package api.pagamentos.entity;
 
 import api.pagamentos.constantes.StatusPagamento;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity(name = "PagamentoEntity")
 @Table(name = "PAGAMENTOS")
@@ -35,14 +35,18 @@ public class PagamentoEntity implements Serializable {
 
     @Column(name = "peso")
     @Positive(message = "Não pode ser negativo.")
-    private int peso;
+    private double pesoKg;
 
     @Column(name = "valor")
+    @PositiveOrZero(message = "Não pode ser negativo.")
+    private double valor;
+
+    @Column(name = "quantidade")
     @Positive(message = "Não pode ser negativo.")
-    private int valor;
+    private int quantidade;
 
     @Column(name = "horario")
-    private LocalDateTime horario = LocalDateTime.now();
+    private String horario;
 
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)

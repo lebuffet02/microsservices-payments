@@ -1,6 +1,6 @@
 package api.pedidos.service.impl;
 
-import api.pedidos.dto.form.PedidoDTO;
+import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import api.pedidos.exception.EmailException;
@@ -30,7 +30,7 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Page<PedidoStatusDTO> getAllService(int page, int size) {
         try {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("nome").ascending());
+            Pageable pageable = PageRequest.of(page, size, Sort.by("valor").ascending());
             return repository.findAll(pageable)
                     .map(mapper::pedidoEntityToStatusDTO);
         } catch (RuntimeException | Error e) {

@@ -1,4 +1,4 @@
-package api.pedidos.dto.form;
+package api.pedidos.dto;
 
 import api.pedidos.exception.EmailException;
 import api.pedidos.exception.PedidosException;
@@ -11,9 +11,10 @@ import java.util.regex.Matcher;
 public record PedidoDTO(
         @Pattern(regexp = EMAIL_PATTERN)
         String email,
-        String nome,
+        String nomeProduto,
         String tipo,
-        int peso) {
+        double pesoKg,
+        double valor) {
 
 
     private static final String EMAIL_PATTERN =

@@ -1,6 +1,6 @@
 package api.pedidos.service;
 
-import api.pedidos.dto.form.PedidoDTO;
+import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import org.springframework.data.domain.Page;
 

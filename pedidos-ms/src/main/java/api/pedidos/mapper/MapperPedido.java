@@ -1,7 +1,7 @@
 package api.pedidos.mapper;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.form.PedidoDTO;
+import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import org.springframework.stereotype.Component;
@@ -11,10 +11,12 @@ public class MapperPedido {
 
     public PedidoStatusDTO pedidoEntityToStatusDTO(PedidoEntity pedidoEntity) {
         return PedidoStatusDTO.builder()
+                .id(pedidoEntity.getId().toString())
                 .email(pedidoEntity.getEmail())
-                .nome(pedidoEntity.getNomeProduto())
+                .nomeProduto(pedidoEntity.getNomeProduto())
                 .tipo(pedidoEntity.getTipo())
-                .peso(pedidoEntity.getPeso())
+                .pesoKg(pedidoEntity.getPesoKg())
+                .valor(pedidoEntity.getValor())
                 .status(pedidoEntity.getStatus())
                 .build();
     }
@@ -22,9 +24,10 @@ public class MapperPedido {
     public PedidoEntity pedidoDTOToEntity(PedidoDTO pedidoDTO) {
         return PedidoEntity.builder()
                 .email(pedidoDTO.email())
-                .nomeProduto(pedidoDTO.nome())
+                .nomeProduto(pedidoDTO.nomeProduto())
                 .tipo(pedidoDTO.tipo())
-                .peso(pedidoDTO.peso())
+                .pesoKg(pedidoDTO.pesoKg())
+                .valor(pedidoDTO.valor())
                 .status(StatusPedido.PROCESSANDO)
                 .build();
     }
