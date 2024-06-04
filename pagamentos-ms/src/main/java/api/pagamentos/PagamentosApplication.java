@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableAsync
 @EnableWebMvc
-@EnableFeignClients
+@EnableFeignClients(basePackages = "api.pagamentos.client")
 @EntityScan(basePackages = "api.pagamentos.entity")
 @EnableJpaRepositories(basePackages = "api.pagamentos.repository")
 @SpringBootApplication

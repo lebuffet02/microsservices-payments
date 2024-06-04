@@ -1,10 +1,8 @@
 package api.pagamentos.service.impl;
 
 import api.pagamentos.client.PedidosClient;
-import api.pagamentos.constantes.StatusPagamento;
-import api.pagamentos.dto.PagamentoDTO;
-import api.pagamentos.dto.PagamentoStatusDTO;
-import api.pagamentos.dto.PedidoStatusUsuarioDTO;
+import api.pagamentos.dto.*;
+import api.pagamentos.dto.form.PagamentoForm;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.exception.PagamentosException;
 import api.pagamentos.exception.ResponseEnum;
@@ -42,19 +40,19 @@ public class PagamentoServiceImpl implements PagamentoService {
         }
     }
 
-    public Optional<PagamentoStatusDTO> saveService(PagamentoDTO pagamentoDTO) {
+    public Optional<PagamentoStatusDTO> saveService(PagamentoForm pagamentoForm, Long pedidoId) {
         try {
-            if(!ObjectUtils.isEmpty(pagamentoDTO) && pagamentoDTO.usuarioDTO().isEmailValid(pagamentoDTO.usuarioDTO().email())) {
-                PedidoStatusUsuarioDTO statusPedidoUsuario = client.getStatusEmailPedido(pagamentoDTO.usuarioDTO().email());
-                if(!statusPedidoUsuario.statusPagamento().equals(StatusPagamento.PROCESSANDO) && !statusPedidoUsuario.statusPagamento().equals(StatusPagamento.RECUSADO)) {
-                    PagamentoEntity pagamentoEntity = mapper.pagamentoDTOToPagamentoEntity(pagamentoDTO);
+            if(!ObjectUtils.isEmpty(pagamentoForm) && pagamentoForm.usuarioDTO().isEmailValid(pagamentoForm.usuarioDTO().email())) {
+                Optional<PedidoStatusDTO> statusPedidoUsuario = client.getStatusEmailPedido(pedidoId);
+                if(statusPedidoUsuario.isPresent() && statusPedidoUsuario.get().status().name().equalsIgnoreCase("aprovado")) {
+                    PagamentoEntity pagamentoEntity = mapper.pagamentoDTOToPagamentoEntity(pagamentoForm, statusPedidoUsuario.get());
                     repository.save(pagamentoEntity);
                     return Optional.of(mapper.pedidoEntityToStatusDTO(pagamentoEntity));
                 }
             }
             return Optional.empty();
         } catch (RuntimeException | Error e) {
-            throw new PagamentosException(ResponseEnum.ERRO_INTERNO, "Falha ao salvar.");
+            throw new PagamentosException(ResponseEnum.ERRO_EXTERNO, "Falha ao salvar pagamento.");
         }
     }
 }

@@ -25,7 +25,7 @@ public class UsuarioEntity implements Serializable {
     @NotBlank(message = "O nome completo não pode estar vazio")
     private String nomeCompleto;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "cpf", unique = true)

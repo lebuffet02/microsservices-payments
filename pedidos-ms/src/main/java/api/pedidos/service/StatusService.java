@@ -13,5 +13,5 @@ public interface StatusService {
 
     void atualizaStatusService(Long id, StatusPedido statusPedido);
 
-    Optional<PedidoStatusDTO> statusByEmailService(String email);
+    Optional<PedidoStatusDTO> statusByPedidoIdService(Long pedidoId);
 }

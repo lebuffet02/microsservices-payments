@@ -2,6 +2,12 @@ url:
   generate:
     token: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/token
 
+pedidos:
+  port: http://localhost:8081
+
+frontend:
+  port: http://localhost:8090
+
 spring:
   security:
     oauth2:

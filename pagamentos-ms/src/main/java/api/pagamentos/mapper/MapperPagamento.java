@@ -1,10 +1,8 @@
 package api.pagamentos.mapper;
 
 import api.pagamentos.constantes.StatusPagamento;
-import api.pagamentos.dto.EnderecoDTO;
-import api.pagamentos.dto.PagamentoDTO;
-import api.pagamentos.dto.PagamentoStatusDTO;
-import api.pagamentos.dto.UsuarioDTO;
+import api.pagamentos.dto.*;
+import api.pagamentos.dto.form.PagamentoForm;
 import api.pagamentos.entity.EnderecoEntity;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
@@ -16,29 +14,35 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class MapperPagamento {
 
-    private static final String PATTERN_TIME = "dd-MM-yyyy'T'HH:mm:ss.SSSSSSXXX";
+    private static final String PATTERN_TIME = "(dd-MM-yyyy)'T'(HH:mm:ss.SSSSSSXXX)";
 
     public PagamentoStatusDTO pedidoEntityToStatusDTO(PagamentoEntity pagamentoEntity) {
         return PagamentoStatusDTO.builder()
                 .id(pagamentoEntity.getId().toString())
                 .usuarioDTO(toUsuarioDTO(pagamentoEntity.getUsuario()))
+                .cartao(pagamentoEntity.getCartao())
+                .parcelas(pagamentoEntity.getParcelas())
                 .nomeProduto(pagamentoEntity.getNomeProduto())
                 .tipo(pagamentoEntity.getTipo())
                 .pesoKg(pagamentoEntity.getPesoKg())
+                .valor(pagamentoEntity.getValor())
                 .quantidade(pagamentoEntity.getQuantidade())
-                .horario(OffsetDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN_TIME)))
+                .horario(pagamentoEntity.getHorario())
                 .status(pagamentoEntity.getStatus())
                 .build();
     }
 
-    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoDTO pagamentoDTO) {
+    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoForm pagamentoForm, PedidoStatusDTO pedidoStatusDTO) {
         return PagamentoEntity.builder()
-                .usuario(toUsuarioEntity(pagamentoDTO.usuarioDTO()))
-                .nomeProduto(pagamentoDTO.nomeProduto())
-                .tipo(pagamentoDTO.tipo())
-                .pesoKg(pagamentoDTO.pesoKg())
-                .valor(pagamentoDTO.valor())
-                .quantidade(pagamentoDTO.quantidade())
+                .usuario(toUsuarioEntity(pagamentoForm.usuarioDTO()))
+                .cartao(pagamentoForm.cartao())
+                .parcelas(pagamentoForm.parcelas())
+                .quantidade(pagamentoForm.quantidade())
+                .nomeProduto(pedidoStatusDTO.nomeProduto())
+                .tipo(pedidoStatusDTO.tipo())
+                .pesoKg(pedidoStatusDTO.pesoKg())
+                .valor(pedidoStatusDTO.valor())
+                .horario(OffsetDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN_TIME)))
                 .status(StatusPagamento.PAGO)
                 .build();
     }

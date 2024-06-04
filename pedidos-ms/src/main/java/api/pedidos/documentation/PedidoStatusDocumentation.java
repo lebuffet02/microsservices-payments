@@ -1,9 +1,8 @@
-package api.pagamentos.documentation;
+package api.pedidos.documentation;
 
-
-import api.pagamentos.dto.form.PagamentoForm;
-import api.pagamentos.dto.PagamentoStatusDTO;
-import api.pagamentos.exception.ErrorDetalhes;
+import api.pedidos.constantes.StatusPedido;
+import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,18 +11,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
+import java.util.Optional;
 
-@Tag(name = "Pagamento", description = "Controller gerenciada através do usuário")
-public interface PagamentoDocumentation {
+@Tag(name = "Pedido Status", description = "Admin pode atualizar e verificar status")
+public interface PedidoStatusDocumentation {
 
-    @Operation(operationId = "Pagamentos", description = "Todos os pagamentos",
+    @Operation(operationId = "Status de um pedido", description = "analisa pedido",
             requestBody = @RequestBody(required = true),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista paginada com os pagamentos",
+                    @ApiResponse(responseCode = "200", description = "retorna status do pedido buscado",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = PagamentoStatusDTO.class))),
+                                    schema = @Schema(implementation = PedidoStatusDTO.class))),
                     @ApiResponse(responseCode = "400", description = "Bad Request",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -41,18 +43,15 @@ public interface PagamentoDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<?> getAllController(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size);
+    ResponseEntity<List<PedidoStatusDTO>> statusPedidoController(@RequestParam("statusPagamento") StatusPedido statusPedido);
 
-
-    @Operation(operationId = "Salva pagamento", description = "Salva pagamento",
+    @Operation(operationId = "Atualiza Status do pedido", description = "Atualiza status pedido",
             requestBody = @RequestBody(required = true),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Adiciona um novo pagamento",
+                    @ApiResponse(responseCode = "200", description = "retorna status atualizado",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = PagamentoStatusDTO.class))),
+                                    schema = @Schema(implementation = PedidoStatusDTO.class))),
                     @ApiResponse(responseCode = "400", description = "Bad Request",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -70,6 +69,31 @@ public interface PagamentoDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<?> saveController(
-            @org.springframework.web.bind.annotation.RequestBody() PagamentoForm pagamentoForm, @RequestParam("id") Long id);
+    ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPagamento") StatusPedido statusPedido);
+
+    @Operation(operationId = "Busca pedido pelo id", description = "Busca pedido de um usuário através do seu id",
+            requestBody = @RequestBody(required = true),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "retorna 204 caso pedido seja deletado",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = PedidoStatusDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDetalhes.class))),
+                    @ApiResponse(responseCode = "401", description = "Invalid User or Login",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDetalhes.class))),
+                    @ApiResponse(responseCode = "403", description = "Forbidden",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDetalhes.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal Error",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDetalhes.class))),
+            })
+    ResponseEntity<Optional<PedidoStatusDTO>> statusByIdController(@RequestParam("pedidoId") Long pedidoId);
 }

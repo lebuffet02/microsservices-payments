@@ -31,7 +31,8 @@ public class StatusServiceImpl implements StatusService {
         try {
             return repository.buscaStatusAtivo(statusPedido)
                     .stream()
-                    .map(p -> mapper.pedidoEntityToStatusDTO(p))
+                    .map(p ->
+                            mapper.pedidoEntityToStatusDTO(p))
                     .collect(Collectors.toList());
         } catch (RuntimeException | Error e) {
             throw new PedidosException(ResponseEnum.ERRO_INTERNO, "Falha ao buscar status.");
@@ -43,7 +44,8 @@ public class StatusServiceImpl implements StatusService {
     public void atualizaStatusService(Long id, StatusPedido statusPedido) {
         try {
             PedidoEntity pedidoEntity = repository.findById(id)
-                    .orElseThrow(() -> new PedidosException(ResponseEnum.ERRO_INTERNO, "Id do pedido não foi encontrado."));
+                    .orElseThrow(() ->
+                            new PedidosException(ResponseEnum.ERRO_INTERNO, "Id do pedido não foi encontrado."));
             if(!pedidoEntity.getStatus().equals(statusPedido)) {
                 repository.atualizaStatusPedido(statusPedido, id);
             }
@@ -56,10 +58,11 @@ public class StatusServiceImpl implements StatusService {
 
     @Transactional
     @Override
-    public Optional<PedidoStatusDTO> statusByEmailService(String email) {
+    public Optional<PedidoStatusDTO> statusByPedidoIdService(Long pedidoId) {
         try {
-            PedidoEntity pedidoEntity = repository.findByEmail(email)
-                    .orElseThrow(() -> new PedidosException(ResponseEnum.ERRO_INTERNO, "Usuário não foi encontrado."));
+            PedidoEntity pedidoEntity = repository.findById(pedidoId)
+                    .orElseThrow(() ->
+                            new PedidosException(ResponseEnum.ERRO_INTERNO, "Usuário não foi encontrado."));
             return Optional.of(mapper.pedidoEntityToStatusDTO(pedidoEntity));
 
         } catch (RuntimeException | Error e) {

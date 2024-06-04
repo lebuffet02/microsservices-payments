@@ -33,19 +33,26 @@ public class PagamentoEntity implements Serializable {
     @Column(name = "tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "peso")
+    @Column(name = "peso", nullable = false)
     @Positive(message = "Não pode ser negativo.")
     private double pesoKg;
 
-    @Column(name = "valor")
+    @Column(name = "valor", nullable = false)
     @PositiveOrZero(message = "Não pode ser negativo.")
     private double valor;
 
-    @Column(name = "quantidade")
+    @Column(name = "cartao", nullable = false)
+    private String cartao;
+
+    @Column(name = "parcelas", nullable = false)
+    @Positive(message = "Não pode ser negativo.")
+    private int parcelas;
+
+    @Column(name = "quantidade", nullable = false)
     @Positive(message = "Não pode ser negativo.")
     private int quantidade;
 
-    @Column(name = "horario")
+    @Column(name = "horario", nullable = false)
     private String horario;
 
     @Column(name = "status", nullable = false)
