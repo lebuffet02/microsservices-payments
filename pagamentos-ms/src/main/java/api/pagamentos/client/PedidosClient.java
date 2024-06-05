@@ -10,7 +10,7 @@ import java.util.Optional;
 @FeignClient(name = "pedidos-ms", url = "${pedidos.port}", path = "/api/pedidos/status")
 public interface PedidosClient {
 
-    @GetMapping("/email")
-    Optional<PedidoStatusDTO> getStatusEmailPedido(@RequestParam("pedidoId") Long pedidoId);
+    @GetMapping("/pedido")
+    Optional<PedidoStatusDTO> getStatusIdPedido(@RequestParam("pedidoId") Long pedidoId);
 
 }

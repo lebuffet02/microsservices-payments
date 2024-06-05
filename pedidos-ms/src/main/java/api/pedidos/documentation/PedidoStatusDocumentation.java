@@ -43,7 +43,7 @@ public interface PedidoStatusDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<List<PedidoStatusDTO>> statusPedidoController(@RequestParam("statusPagamento") StatusPedido statusPedido);
+    ResponseEntity<List<PedidoStatusDTO>> statusPedidoController(@RequestParam("statusPedido") StatusPedido statusPedido);
 
     @Operation(operationId = "Atualiza Status do pedido", description = "Atualiza status pedido",
             requestBody = @RequestBody(required = true),
@@ -69,7 +69,7 @@ public interface PedidoStatusDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPagamento") StatusPedido statusPedido);
+    ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPedido") StatusPedido statusPedido);
 
     @Operation(operationId = "Busca pedido pelo id", description = "Busca pedido de um usuário através do seu id",
             requestBody = @RequestBody(required = true),

@@ -1,6 +1,6 @@
 package api.pagamentos.dto;
 
-import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.constantes.StatusPedido;
 import lombok.Builder;
 
 @Builder
@@ -15,4 +15,5 @@ public record PagamentoStatusDTO(
         double valor,
         int quantidade,
         String horario,
-        StatusPagamento status){}
+        StatusPedido status,
+        boolean isPagamentoAceito){}

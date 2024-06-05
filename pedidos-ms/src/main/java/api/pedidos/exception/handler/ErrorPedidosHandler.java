@@ -31,10 +31,4 @@ public class ErrorPedidosHandler extends ResponseEntityExceptionHandler {
         ErrorDetalhes error = new ErrorDetalhes(TimeUtils.getZoneTimeWithClock(), ex.getMessage(), ex.getTipo(), RandomUtils.generateCode(), IpUtils.getAddress());
         return new ResponseEntity<>(error, HttpStatusCode.valueOf(400));
     }
-
-    @ExceptionHandler(EmailException.class)
-    public ResponseEntity<ErrorDetalhes> errorEmailException(EmailException ex) {
-        ErrorDetalhes error = new ErrorDetalhes(TimeUtils.getZoneTimeWithClock(), ex.getMessage(), ex.getTipo(), RandomUtils.generateCode(), IpUtils.getAddress());
-        return new ResponseEntity<>(error, HttpStatusCode.valueOf(400));
-    }
 }

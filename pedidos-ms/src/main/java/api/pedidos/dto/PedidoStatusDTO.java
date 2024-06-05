@@ -6,7 +6,6 @@ import lombok.Builder;
 @Builder
 public record PedidoStatusDTO(
         String id,
-        String email,
         String nomeProduto,
         String tipo,
         double pesoKg,

@@ -1,13 +1,10 @@
 package api.pagamentos.entity;
 
-import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.constantes.StatusPedido;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -57,5 +54,8 @@ public class PagamentoEntity implements Serializable {
 
     @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private StatusPagamento status;
+    private StatusPedido status;
+
+    @Column(name = "isPagamentoAceito", nullable = false)
+    private boolean isPagamentoAceito;
 }

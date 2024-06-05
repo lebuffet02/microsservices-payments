@@ -43,9 +43,9 @@ public class PagamentoServiceImpl implements PagamentoService {
     public Optional<PagamentoStatusDTO> saveService(PagamentoForm pagamentoForm, Long pedidoId) {
         try {
             if(!ObjectUtils.isEmpty(pagamentoForm) && pagamentoForm.usuarioDTO().isEmailValid(pagamentoForm.usuarioDTO().email())) {
-                Optional<PedidoStatusDTO> statusPedidoUsuario = client.getStatusEmailPedido(pedidoId);
+                Optional<PedidoStatusDTO> statusPedidoUsuario = client.getStatusIdPedido(pedidoId);
                 if(statusPedidoUsuario.isPresent() && statusPedidoUsuario.get().status().name().equalsIgnoreCase("aprovado")) {
-                    PagamentoEntity pagamentoEntity = mapper.pagamentoDTOToPagamentoEntity(pagamentoForm, statusPedidoUsuario.get());
+                    PagamentoEntity pagamentoEntity = mapper.pagamentoDTOToPagamentoEntity(pagamentoForm, statusPedidoUsuario.get(), false);
                     repository.save(pagamentoEntity);
                     return Optional.of(mapper.pedidoEntityToStatusDTO(pagamentoEntity));
                 }

@@ -1,6 +1,6 @@
 package api.pagamentos.documentation;
 
-import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.constantes.StatusPedido;
 import api.pagamentos.dto.PagamentoStatusDTO;
 import api.pagamentos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +43,7 @@ public interface PagamentosStatusDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<List<PagamentoStatusDTO>> statusController(@RequestParam("statusPagamento") StatusPagamento statusPagamento);
+    ResponseEntity<List<PagamentoStatusDTO>> statusController(@RequestParam("statusPedido") StatusPedido statusPedido);
 
 
     @Operation(operationId = "Atualiza Status do Pagamento", description = "Status atualizado de um usuário",
@@ -70,5 +70,5 @@ public interface PagamentosStatusDocumentation {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
-    ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPagamento") StatusPagamento statusPagamento);
+    ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPedido") StatusPedido statusPedido);
 }

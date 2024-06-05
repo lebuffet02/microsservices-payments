@@ -3,7 +3,6 @@ package api.pedidos.service.impl;
 import api.pedidos.dto.PedidoDTO;
 import api.pedidos.dto.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
-import api.pedidos.exception.EmailException;
 import api.pedidos.exception.PedidosException;
 import api.pedidos.exception.ResponseEnum;
 import api.pedidos.mapper.MapperPedido;
@@ -71,7 +70,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     private Optional<PedidoStatusDTO> getPedidoDTO(Long id, PedidoDTO pedidoDTO, String mensagemError) {
         try {
-            if(!ObjectUtils.isEmpty(pedidoDTO) && pedidoDTO.isEmailValid(pedidoDTO.email())) {
+            if(!ObjectUtils.isEmpty(pedidoDTO)) {
                 PedidoEntity pedidoEntity = mapper.pedidoDTOToEntity(pedidoDTO);
                 pedidoEntity.setId(id);
                 repository.save(pedidoEntity);
@@ -79,8 +78,7 @@ public class PedidoServiceImpl implements PedidoService {
             }
             return Optional.empty();
         } catch (RuntimeException | Error e) {
-            throw (e instanceof PedidosException) ?  new PedidosException(ResponseEnum.ERRO_INTERNO, mensagemError)
-                    : new EmailException(ResponseEnum.ERRO_INTERNO, e.getMessage());
+            throw new PedidosException(ResponseEnum.ERRO_INTERNO, mensagemError);
         }
     }
 }

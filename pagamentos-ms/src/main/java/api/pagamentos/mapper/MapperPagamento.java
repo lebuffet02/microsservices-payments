@@ -1,6 +1,6 @@
 package api.pagamentos.mapper;
 
-import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.constantes.StatusPedido;
 import api.pagamentos.dto.*;
 import api.pagamentos.dto.form.PagamentoForm;
 import api.pagamentos.entity.EnderecoEntity;
@@ -29,10 +29,11 @@ public class MapperPagamento {
                 .quantidade(pagamentoEntity.getQuantidade())
                 .horario(pagamentoEntity.getHorario())
                 .status(pagamentoEntity.getStatus())
+                .isPagamentoAceito(pagamentoEntity.isPagamentoAceito())
                 .build();
     }
 
-    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoForm pagamentoForm, PedidoStatusDTO pedidoStatusDTO) {
+    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoForm pagamentoForm, PedidoStatusDTO pedidoStatusDTO, boolean isAceito) {
         return PagamentoEntity.builder()
                 .usuario(toUsuarioEntity(pagamentoForm.usuarioDTO()))
                 .cartao(pagamentoForm.cartao())
@@ -43,8 +44,13 @@ public class MapperPagamento {
                 .pesoKg(pedidoStatusDTO.pesoKg())
                 .valor(pedidoStatusDTO.valor())
                 .horario(OffsetDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN_TIME)))
-                .status(StatusPagamento.PAGO)
+                .status(StatusPedido.PAGO)
+                .isPagamentoAceito(pagamentoFoiAceito(isAceito))
                 .build();
+    }
+
+    public boolean pagamentoFoiAceito(boolean isAceito) {
+        return isAceito;
     }
 
     private UsuarioEntity toUsuarioEntity(UsuarioDTO usuarioDTO) {

@@ -1,6 +1,6 @@
 package api.pagamentos.constantes;
 
-public enum StatusPagamento {
+public enum StatusPedido {
     PAGAMENTO_RECEBIDO,
     PAGO,
     APROVADO,

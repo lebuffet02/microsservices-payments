@@ -1,6 +1,6 @@
 package api.pagamentos.service.impl;
 
-import api.pagamentos.constantes.StatusPagamento;
+import api.pagamentos.constantes.StatusPedido;
 import api.pagamentos.dto.PagamentoStatusDTO;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
@@ -17,7 +17,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +38,9 @@ public class StatusServiceImpl implements StatusService {
 
 
     @Override
-    public List<PagamentoStatusDTO> buscarStatusService(StatusPagamento statusPagamento) {
+    public List<PagamentoStatusDTO> buscarStatusService(StatusPedido statusPedido) {
         try {
-            return repository.buscaStatusAtivo(statusPagamento)
+            return repository.buscaStatusAtivo(statusPedido)
                     .stream()
                     .map(p -> mapper.pedidoEntityToStatusDTO(p))
                     .collect(Collectors.toList());
@@ -53,12 +52,14 @@ public class StatusServiceImpl implements StatusService {
     @Async
     @Transactional
     @Override
-    public void atualizaStatusService(Long id, StatusPagamento statusPagamento) {
+    public void atualizaStatusService(Long id, StatusPedido statusPedido) {
         try {
             PagamentoEntity pagamentoEntity = repository.findById(id).orElseThrow(() -> new PagamentosException(ResponseEnum.ERRO_INTERNO, "Usuário não foi encontrado."));
-            if(!pagamentoEntity.getStatus().equals(statusPagamento)) {
-                repository.atualizaStatusPedido(statusPagamento, id);
-                enviarEmailNotificacao(pagamentoEntity.getUsuario(), pagamentoEntity, statusPagamento);
+            if(statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO) || statusPedido.equals(StatusPedido.RECUSADO)) {
+                if(!pagamentoEntity.getStatus().equals(statusPedido) && pagamentoEntity.getStatus().equals(StatusPedido.PAGO)) {
+                    repository.atualizaStatusPedido(statusPedido, statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO), id);
+                    enviarEmailNotificacao(pagamentoEntity.getUsuario(), pagamentoEntity, statusPedido);
+                }
             }
         } catch (RuntimeException | Error e) {
             log.error("Exception: ".concat(e.getMessage()));
@@ -69,12 +70,13 @@ public class StatusServiceImpl implements StatusService {
         }
     }
 
-    private void enviarEmailNotificacao(UsuarioEntity usuarioEntity, PagamentoEntity pagamentoEntity, StatusPagamento statusPagamento) {
+    private void enviarEmailNotificacao(UsuarioEntity usuarioEntity, PagamentoEntity pagamentoEntity, StatusPedido statusPedido) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setFrom("teste@gmail.com"); // ALTERAR ESSE EMAIL
-            mailMessage.setTo(usuarioEntity.getEmail());
-            if (statusPagamento.equals(StatusPagamento.RECUSADO)) {
+            mailMessage.setFrom("rendarenda257@gmail.com");
+            //mailMessage.setTo(usuarioEntity.getEmail());
+            mailMessage.setTo("lebuffet02@gmail.com");
+            if (statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO)) {
                 log.info("toEmail: {} subJect: {} emailMessage: {}", usuarioEntity.getEmail(), SUBJECT, MESSAGE.concat(pagamentoEntity.getNomeProduto())
                         .concat(" foi separado."));
                 mailMessage.setSubject(SUBJECT);

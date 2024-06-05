@@ -37,7 +37,7 @@ public class PedidosStatusController implements PedidoStatusDocumentation {
 
     @Override
     //@PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("email")
+    @GetMapping("/pedido")
     public ResponseEntity<Optional<PedidoStatusDTO>> statusByIdController(@RequestParam("pedidoId") Long pedidoId) {
         return ResponseEntity.ok(service.statusByPedidoIdService(pedidoId));
     }
