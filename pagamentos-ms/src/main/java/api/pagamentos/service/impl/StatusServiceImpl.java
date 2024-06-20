@@ -32,7 +32,7 @@ public class StatusServiceImpl implements StatusService {
     PagamentoRepository repository;
 
     private static final String SUBJECT = "Pagamento realizado.";
-    private static final String MESSAGE = "Pagamento realizado com sucesso";
+    private static final String MESSAGE = "Pagamento realizado com sucesso ";
     private static final String SUBJECT_FAILED = "Pagamento recusado";
     private static final String MESSAGE_FAILED = "Pagamento não foi aceito para ";
 
@@ -54,12 +54,11 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void atualizaStatusService(Long id, StatusPedido statusPedido) {
         try {
+
             PagamentoEntity pagamentoEntity = repository.findById(id).orElseThrow(() -> new PagamentosException(ResponseEnum.ERRO_INTERNO, "Usuário não foi encontrado."));
-            if(statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO) || statusPedido.equals(StatusPedido.RECUSADO)) {
-                if(!pagamentoEntity.getStatus().equals(statusPedido) && pagamentoEntity.getStatus().equals(StatusPedido.PAGO)) {
-                    repository.atualizaStatusPedido(statusPedido, statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO), id);
-                    enviarEmailNotificacao(pagamentoEntity.getUsuario(), pagamentoEntity, statusPedido);
-                }
+            if(deveAtualizarStatus(pagamentoEntity, statusPedido)) {
+                repository.atualizaStatusPedido(statusPedido, statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO), id);
+                enviarEmailNotificacao(pagamentoEntity.getUsuario(), pagamentoEntity.getNomeProduto(), statusPedido);
             }
         } catch (RuntimeException | Error e) {
             log.error("Exception: ".concat(e.getMessage()));
@@ -70,25 +69,25 @@ public class StatusServiceImpl implements StatusService {
         }
     }
 
-    private void enviarEmailNotificacao(UsuarioEntity usuarioEntity, PagamentoEntity pagamentoEntity, StatusPedido statusPedido) {
+    private boolean deveAtualizarStatus(PagamentoEntity pagamentoEntity, StatusPedido statusPedido) {
+        return (statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO) || statusPedido.equals(StatusPedido.RECUSADO))
+                && pagamentoEntity.getStatus().equals(StatusPedido.PAGO);
+    }
+
+    private void enviarEmailNotificacao(UsuarioEntity usuarioEntity, String produto, StatusPedido statusPedido) {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setFrom("rendarenda257@gmail.com");
-            //mailMessage.setTo(usuarioEntity.getEmail());
+            mailMessage.setFrom(usuarioEntity.getEmail());
             mailMessage.setTo("lebuffet02@gmail.com");
-            if (statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO)) {
-                log.info("toEmail: {} subJect: {} emailMessage: {}", usuarioEntity.getEmail(), SUBJECT, MESSAGE.concat(pagamentoEntity.getNomeProduto())
-                        .concat(" foi separado."));
-                mailMessage.setSubject(SUBJECT);
-                mailMessage.setText(MESSAGE.concat(pagamentoEntity.getNomeProduto()).concat(" foi separado(a)."));
-                mailSender.send(mailMessage);
-            } else {
-                mailMessage.setSubject(SUBJECT_FAILED);
-                mailMessage.setText(MESSAGE_FAILED.concat(pagamentoEntity.getNomeProduto()));
-                mailSender.send(mailMessage);
-            }
+            mailMessage.setSubject(verificaStatusRecebido(statusPedido) ? SUBJECT : SUBJECT_FAILED);
+            mailMessage.setText(verificaStatusRecebido(statusPedido) ? MESSAGE.concat(produto).concat(" foi separado(a).") : MESSAGE_FAILED.concat(produto));
+            mailSender.send(mailMessage);
         } catch (RuntimeException | Error e) {
             throw new EmailException(ResponseEnum.ERRO_INTERNO, "Falha ao enviar email");
         }
+    }
+
+    private boolean verificaStatusRecebido(StatusPedido statusPedido) {
+        return statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO);
     }
 }

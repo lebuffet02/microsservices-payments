@@ -25,6 +25,8 @@ public class PedidoServiceImpl implements PedidoService {
     PedidoRepository repository;
     @Autowired
     MapperPedido mapper;
+//    @Autowired
+//    Producer topicProducer;
 
     @Override
     public Page<PedidoStatusDTO> getAllService(int page, int size) {
@@ -39,6 +41,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Optional<PedidoStatusDTO> saveService(PedidoDTO pedidoDTO) {
+        //topicProducer.send(pedidoDTO);
         return getPedidoDTO(null, pedidoDTO, "Falha ao cadastrar pedido.");
     }
 
