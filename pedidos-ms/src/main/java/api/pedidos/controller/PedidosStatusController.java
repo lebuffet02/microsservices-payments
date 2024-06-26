@@ -7,6 +7,7 @@ import api.pedidos.service.impl.StatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class PedidosStatusController implements PedidoStatusDocumentation {
     StatusServiceImpl service;
 
     @Override
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<PedidoStatusDTO>> statusPedidoController(
            @RequestParam("status") StatusPedido statusPedido) {
@@ -27,7 +28,7 @@ public class PedidosStatusController implements PedidoStatusDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizaStatusController(
             @PathVariable("id") Long id, @RequestParam("status") StatusPedido statusPedido) {
@@ -36,7 +37,7 @@ public class PedidosStatusController implements PedidoStatusDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pedido")
     public ResponseEntity<Optional<PedidoStatusDTO>> statusByIdController(@RequestParam("pedidoId") Long pedidoId) {
         return ResponseEntity.ok(service.statusByPedidoIdService(pedidoId));

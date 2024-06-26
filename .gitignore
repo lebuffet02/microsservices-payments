@@ -27,3 +27,4 @@ replay_pid*
 /.idea/
 
 pedidos-ms/pedidos-ms.iml
+/postgres-data/

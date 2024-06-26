@@ -6,6 +6,7 @@ import api.pagamentos.service.impl.PagamentoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class PagamentoController implements PagamentoDocumentation {
     PagamentoServiceImpl service;
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<?> getAllController(
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
@@ -25,7 +26,7 @@ public class PagamentoController implements PagamentoDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> saveController(
             @RequestBody PagamentoForm pagamentoForm,

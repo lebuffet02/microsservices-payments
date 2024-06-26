@@ -7,6 +7,7 @@ import api.pedidos.service.impl.PedidoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class PedidoController implements PedidoDocumentation {
     PedidoServiceImpl service;
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<?> getAllController(
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
@@ -28,14 +29,14 @@ public class PedidoController implements PedidoDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<Optional<PedidoStatusDTO>> saveController(@RequestBody PedidoDTO dto) {
         return ResponseEntity.ok(service.saveService(dto));
     }
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("{id}")
     public ResponseEntity<Optional<PedidoStatusDTO>> updateController(@PathVariable("id") Long id, @RequestBody PedidoDTO dto) {
         return service.updateService(id, dto).isPresent() ?
@@ -43,7 +44,7 @@ public class PedidoController implements PedidoDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<PedidoStatusDTO>> getByIdController(
             @PathVariable("id") Long id) {
@@ -52,7 +53,7 @@ public class PedidoController implements PedidoDocumentation {
     }
 
     @Override
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteByIdController(
             @PathVariable("id") Long id) {

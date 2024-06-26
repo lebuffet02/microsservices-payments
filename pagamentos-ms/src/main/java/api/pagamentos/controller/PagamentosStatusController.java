@@ -7,6 +7,7 @@ import api.pagamentos.service.impl.StatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class PagamentosStatusController implements PagamentosStatusDocumentation
     StatusServiceImpl service;
 
     @Override
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<PagamentoStatusDTO>> statusController(
            @RequestParam("statusPedido") StatusPedido statusPedido) {
@@ -27,7 +28,7 @@ public class PagamentosStatusController implements PagamentosStatusDocumentation
     }
 
     @Override
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizaStatusController(@PathVariable("id") Long id, @RequestParam("statusPedido") StatusPedido statusPedido) {
         service.atualizaStatusService(id, statusPedido);
