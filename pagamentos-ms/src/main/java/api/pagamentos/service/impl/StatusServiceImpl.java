@@ -35,6 +35,7 @@ public class StatusServiceImpl implements StatusService {
     private static final String MESSAGE = "Pagamento realizado com sucesso ";
     private static final String SUBJECT_FAILED = "Pagamento recusado";
     private static final String MESSAGE_FAILED = "Pagamento não foi aceito para ";
+    private static final String EMAIL_CONTACT = "teste@gmail.com";
 
 
     @Override
@@ -54,7 +55,6 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void atualizaStatusService(Long id, StatusPedido statusPedido) {
         try {
-
             PagamentoEntity pagamentoEntity = repository.findById(id).orElseThrow(() -> new PagamentosException(ResponseEnum.ERRO_INTERNO, "Usuário não foi encontrado."));
             if(deveAtualizarStatus(pagamentoEntity, statusPedido)) {
                 repository.atualizaStatusPedido(statusPedido, statusPedido.equals(StatusPedido.PAGAMENTO_RECEBIDO), id);
@@ -78,7 +78,7 @@ public class StatusServiceImpl implements StatusService {
         try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(usuarioEntity.getEmail());
-            mailMessage.setTo("lebuffet02@gmail.com");
+            mailMessage.setTo(EMAIL_CONTACT);
             mailMessage.setSubject(verificaStatusRecebido(statusPedido) ? SUBJECT : SUBJECT_FAILED);
             mailMessage.setText(verificaStatusRecebido(statusPedido) ? MESSAGE.concat(produto).concat(" foi separado(a).") : MESSAGE_FAILED.concat(produto));
             mailSender.send(mailMessage);

@@ -43,4 +43,10 @@ class MaskUtilsTest {
     void testaCpfMascaradoDeveSerVazio() {
         Assertions.assertThrows(NullPointerException.class, () -> MaskUtils.maskCpf(""));
     }
+
+    @DisplayName("O cep inválido mascarado deve lançar NullPointer ao chamar o length.")
+    @Test
+    void testaMaskCep() {
+        Assertions.assertNull(MaskUtils.maskCep("1"));
+    }
 }
