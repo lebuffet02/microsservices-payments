@@ -8,6 +8,7 @@
 - Spring Boot, Security, Data e Cloud
 - Keycloak
 - JPA
+- Postgres
 - Feign Client
 - Eureka Server
 - API Gateway
