@@ -1,7 +1,7 @@
 package api.pedidos.documentation;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

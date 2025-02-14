@@ -1,7 +1,7 @@
 package api.pagamentos.controller;
 
-import api.pagamentos.dto.form.AuthKeycloak;
-import api.pagamentos.dto.form.RefreshKeycloak;
+import api.pagamentos.dto.request.AuthKeycloak;
+import api.pagamentos.dto.request.RefreshKeycloak;
 import api.pagamentos.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

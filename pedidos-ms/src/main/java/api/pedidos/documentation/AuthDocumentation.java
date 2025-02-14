@@ -1,9 +1,9 @@
 package api.pedidos.documentation;
 
 
-import api.pedidos.dto.AuthKeycloakDTO;
-import api.pedidos.dto.form.AuthKeycloak;
-import api.pedidos.dto.form.RefreshKeycloak;
+import api.pedidos.dto.response.AuthKeycloakDTO;
+import api.pedidos.dto.request.AuthKeycloak;
+import api.pedidos.dto.request.RefreshKeycloak;
 import api.pedidos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;

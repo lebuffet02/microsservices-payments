@@ -1,8 +1,8 @@
 package api.pedidos.controller;
 
 import api.pedidos.documentation.PedidoDocumentation;
-import api.pedidos.dto.PedidoDTO;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.service.impl.PedidoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

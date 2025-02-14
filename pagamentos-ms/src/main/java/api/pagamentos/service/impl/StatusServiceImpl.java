@@ -1,7 +1,7 @@
 package api.pagamentos.service.impl;
 
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
 import api.pagamentos.exception.EmailException;
@@ -31,10 +31,10 @@ public class StatusServiceImpl implements StatusService {
     @Autowired
     PagamentoRepository repository;
 
-    private static final String SUBJECT = "Pagamento realizado.";
-    private static final String MESSAGE = "Pagamento realizado com sucesso ";
-    private static final String SUBJECT_FAILED = "Pagamento recusado";
-    private static final String MESSAGE_FAILED = "Pagamento não foi aceito para ";
+    private static final String SUBJECT = "Pagamento Realizado.";
+    private static final String MESSAGE = "Pagamento Realizado com Sucesso ";
+    private static final String SUBJECT_FAILED = "Pagamento Recusado";
+    private static final String MESSAGE_FAILED = "Pagamento não foi aceito para o produto: ";
     private static final String EMAIL_CONTACT = "teste@gmail.com";
 
 
@@ -61,7 +61,7 @@ public class StatusServiceImpl implements StatusService {
                 enviarEmailNotificacao(pagamentoEntity.getUsuario(), pagamentoEntity.getNomeProduto(), statusPedido);
             }
         } catch (RuntimeException | Error e) {
-            log.error("Exception: ".concat(e.getMessage()));
+            log.info("Falha ao atualizar status do pedido número: {} ", id);
             throw (e instanceof PagamentosException) ?
                     new PagamentosException(ResponseEnum.ERRO_INTERNO, !e.getMessage().toLowerCase().contains("usuário")
                             ? "Falha ao atualizar o status do pedido." : e.getMessage())
@@ -83,6 +83,7 @@ public class StatusServiceImpl implements StatusService {
             mailMessage.setText(verificaStatusRecebido(statusPedido) ? MESSAGE.concat(produto).concat(" foi separado(a).") : MESSAGE_FAILED.concat(produto));
             mailSender.send(mailMessage);
         } catch (RuntimeException | Error e) {
+            log.info("Falha ao enviar email de notificação para: {} ", usuarioEntity.getEmail());
             throw new EmailException(ResponseEnum.ERRO_INTERNO, "Falha ao enviar email");
         }
     }

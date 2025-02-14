@@ -1,6 +1,6 @@
 package api.pedidos.mapper;
 
-import api.pedidos.dto.form.AuthKeycloak;
+import api.pedidos.dto.request.AuthKeycloak;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

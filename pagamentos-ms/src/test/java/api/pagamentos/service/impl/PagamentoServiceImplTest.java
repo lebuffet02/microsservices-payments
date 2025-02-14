@@ -3,11 +3,11 @@ package api.pagamentos.service.impl;
 
 import api.pagamentos.client.PedidosClient;
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.EnderecoDTO;
-import api.pagamentos.dto.PagamentoStatusDTO;
-import api.pagamentos.dto.PedidoStatusDTO;
-import api.pagamentos.dto.UsuarioDTO;
-import api.pagamentos.dto.form.PagamentoForm;
+import api.pagamentos.dto.response.EnderecoDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PedidoStatusDTO;
+import api.pagamentos.dto.response.UsuarioDTO;
+import api.pagamentos.dto.request.PagamentoRequest;
 import api.pagamentos.entity.EnderecoEntity;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
@@ -61,7 +61,7 @@ class PagamentoServiceImplTest {
     @DisplayName("Testa método saveService.")
     @Test
     void testaSaveService() {
-        PagamentoForm form = getPagamentoForm();
+        PagamentoRequest form = getPagamentoForm();
         PedidoStatusDTO dto = getPedidoStatusDTO();
         when(client.getStatusIdPedido(1L)).thenReturn(Optional.of(dto));
         when(mapper.pagamentoDTOToPagamentoEntity(form, dto, false)).thenReturn(getPagamentoEntity());
@@ -111,8 +111,8 @@ class PagamentoServiceImplTest {
         return new PedidoStatusDTO("1", "nome", "tipo", 2.0, 2.0, StatusPedido.APROVADO);
     }
 
-    private PagamentoForm getPagamentoForm() {
-        return new PagamentoForm(new UsuarioDTO("t@gmail.com", "nome",
+    private PagamentoRequest getPagamentoForm() {
+        return new PagamentoRequest(new UsuarioDTO("t@gmail.com", "nome",
                 "00000000000", "26/02/2002", new EnderecoDTO("rs", "poa", "f", "00000000", "")), 1, "visa", 1);
     }
 }

@@ -1,10 +1,10 @@
 package api.pagamentos.mapper;
 
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.EnderecoDTO;
-import api.pagamentos.dto.PedidoStatusDTO;
-import api.pagamentos.dto.UsuarioDTO;
-import api.pagamentos.dto.form.PagamentoForm;
+import api.pagamentos.dto.response.EnderecoDTO;
+import api.pagamentos.dto.response.PedidoStatusDTO;
+import api.pagamentos.dto.response.UsuarioDTO;
+import api.pagamentos.dto.request.PagamentoRequest;
 import api.pagamentos.entity.EnderecoEntity;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
@@ -32,7 +32,7 @@ class MapperPagamentoTest {
     @DisplayName("mapper dto para entity.")
     @Test
     void testaPagamentoDTOToPagamentoEntity() {
-        Assertions.assertNotNull(mapper.pagamentoDTOToPagamentoEntity(new PagamentoForm(new UsuarioDTO("tes@gmail.com", "", "00000000000", "26/02/2002", new EnderecoDTO(
+        Assertions.assertNotNull(mapper.pagamentoDTOToPagamentoEntity(new PagamentoRequest(new UsuarioDTO("tes@gmail.com", "", "00000000000", "26/02/2002", new EnderecoDTO(
                 "rs", "poa", "f", "00000000", "1")), 1, "visa", 1), new PedidoStatusDTO("1", "",
         "", 2.0, 2.0, StatusPedido.PAGO), true));
     }

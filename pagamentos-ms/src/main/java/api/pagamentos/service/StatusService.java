@@ -1,7 +1,7 @@
 package api.pagamentos.service;
 
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
 
 import java.util.List;
 

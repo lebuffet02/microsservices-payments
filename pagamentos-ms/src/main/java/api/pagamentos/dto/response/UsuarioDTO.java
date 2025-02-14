@@ -1,4 +1,4 @@
-package api.pagamentos.dto;
+package api.pagamentos.dto.response;
 
 import api.pagamentos.exception.EmailException;
 import api.pagamentos.exception.PagamentosException;

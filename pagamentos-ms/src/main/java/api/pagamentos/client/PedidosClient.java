@@ -1,6 +1,6 @@
 package api.pagamentos.client;
 
-import api.pagamentos.dto.PedidoStatusDTO;
+import api.pagamentos.dto.response.PedidoStatusDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

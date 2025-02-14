@@ -1,11 +1,10 @@
 package api.pedidos.service.impl;
 
-import api.pedidos.dto.PedidoDTO;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import api.pedidos.exception.PedidosException;
 import api.pedidos.exception.ResponseEnum;
-import api.pedidos.kafkaProducer.Producer;
 import api.pedidos.mapper.MapperPedido;
 import api.pedidos.repository.PedidoRepository;
 import api.pedidos.service.PedidoService;
@@ -26,8 +25,6 @@ public class PedidoServiceImpl implements PedidoService {
     PedidoRepository repository;
     @Autowired
     MapperPedido mapper;
-    @Autowired
-    Producer topicProducer;
 
     @Override
     public Page<PedidoStatusDTO> getAllService(int page, int size) {
@@ -42,7 +39,6 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Optional<PedidoStatusDTO> saveService(PedidoDTO pedidoDTO) {
-        topicProducer.send(pedidoDTO);
         return getPedidoDTO(null, pedidoDTO, "Falha ao cadastrar pedido.");
     }
 

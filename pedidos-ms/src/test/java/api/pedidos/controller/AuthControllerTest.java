@@ -1,7 +1,7 @@
 package api.pedidos.controller;
 
-import api.pedidos.dto.form.AuthKeycloak;
-import api.pedidos.dto.form.RefreshKeycloak;
+import api.pedidos.dto.request.AuthKeycloak;
+import api.pedidos.dto.request.RefreshKeycloak;
 import api.pedidos.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

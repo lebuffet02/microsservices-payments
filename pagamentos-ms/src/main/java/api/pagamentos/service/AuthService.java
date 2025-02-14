@@ -1,9 +1,9 @@
 package api.pagamentos.service;
 
 
-import api.pagamentos.dto.AuthKeycloakDTO;
-import api.pagamentos.dto.form.AuthKeycloak;
-import api.pagamentos.dto.form.RefreshKeycloak;
+import api.pagamentos.dto.response.AuthKeycloakDTO;
+import api.pagamentos.dto.request.AuthKeycloak;
+import api.pagamentos.dto.request.RefreshKeycloak;
 
 public interface AuthService {
 

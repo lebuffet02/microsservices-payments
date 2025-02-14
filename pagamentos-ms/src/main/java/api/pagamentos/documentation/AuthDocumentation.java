@@ -1,9 +1,9 @@
 package api.pagamentos.documentation;
 
 
-import api.pagamentos.dto.AuthKeycloakDTO;
-import api.pagamentos.dto.form.AuthKeycloak;
-import api.pagamentos.dto.form.RefreshKeycloak;
+import api.pagamentos.dto.response.AuthKeycloakDTO;
+import api.pagamentos.dto.request.AuthKeycloak;
+import api.pagamentos.dto.request.RefreshKeycloak;
 import api.pagamentos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;

@@ -23,15 +23,6 @@ services:
       - keycloak-data:/opt/jboss/keycloak/standalone/data
       - keycloak_logs:/opt/jboss/keycloak/standalone/log
 
-#  kafka:
-#    container_name: kafka
-#    image: bitnami/kafka:latest
-#    restart: always
-#    environment:
-#      - KRAFT_CONTAINER_HOST_NAME=broker
-#    ports:
-#      - 9092:9092
-
   db:
     image: postgres
     container_name: db

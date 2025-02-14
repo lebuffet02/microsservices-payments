@@ -1,7 +1,7 @@
 package api.pedidos.service;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

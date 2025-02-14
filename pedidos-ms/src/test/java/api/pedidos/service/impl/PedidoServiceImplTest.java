@@ -1,11 +1,10 @@
 package api.pedidos.service.impl;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoDTO;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import api.pedidos.exception.PedidosException;
-import api.pedidos.kafkaProducer.Producer;
 import api.pedidos.mapper.MapperPedido;
 import api.pedidos.repository.PedidoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -29,8 +28,6 @@ class PedidoServiceImplTest {
     PedidoRepository repository;
     @Mock
     MapperPedido mapper;
-    @Mock
-    Producer topicProducer;
     @InjectMocks
     PedidoServiceImpl service;
 
@@ -56,7 +53,6 @@ class PedidoServiceImplTest {
     void testaSaveService() {
         PedidoDTO pedidoDTO = getPedidoDTO();
         PedidoEntity pedidoEntity = getPedidoEntity();
-        doNothing().when(topicProducer).send(pedidoDTO);
         when(mapper.pedidoDTOToEntity(pedidoDTO)).thenReturn(pedidoEntity);
         when(mapper.pedidoEntityToStatusDTO(pedidoEntity)).thenReturn(new PedidoStatusDTO("1", "", "", 1.0, 1.0, StatusPedido.PROCESSANDO));
         Assertions.assertNotNull(service.saveService(getPedidoDTO()));
@@ -71,7 +67,6 @@ class PedidoServiceImplTest {
     @DisplayName("Testa exceção do método saveService.")
     @Test
     void testaExcecaoPedidosExceptionNoMetodoSaveService() {
-        doNothing().when(topicProducer).send(getPedidoDTO());
         when(mapper.pedidoDTOToEntity(any())).thenThrow(PedidosException.class);
        Assertions.assertThrows(PedidosException.class, () -> service.saveService(getPedidoDTO()));
     }

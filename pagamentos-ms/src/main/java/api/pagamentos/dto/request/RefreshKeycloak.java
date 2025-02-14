@@ -1,4 +1,4 @@
-package api.pedidos.dto.form;
+package api.pagamentos.dto.request;
 
 import lombok.Builder;
 

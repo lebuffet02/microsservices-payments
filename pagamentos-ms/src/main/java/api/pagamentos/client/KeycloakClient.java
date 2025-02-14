@@ -1,6 +1,6 @@
 package api.pagamentos.client;
 
-import api.pagamentos.dto.form.AuthKeycloak;
+import api.pagamentos.dto.request.AuthKeycloak;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

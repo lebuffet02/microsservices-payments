@@ -1,8 +1,8 @@
 package api.pagamentos.documentation;
 
 
-import api.pagamentos.dto.form.PagamentoForm;
-import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.dto.request.PagamentoRequest;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
 import api.pagamentos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -71,5 +71,5 @@ public interface PagamentoDocumentation {
                                     schema = @Schema(implementation = ErrorDetalhes.class))),
             })
     ResponseEntity<?> saveController(
-            @org.springframework.web.bind.annotation.RequestBody() PagamentoForm pagamentoForm, @RequestParam("id") Long id);
+            @org.springframework.web.bind.annotation.RequestBody() PagamentoRequest pagamentoRequest, @RequestParam("id") Long id);
 }

@@ -1,6 +1,6 @@
 package api.pedidos.client;
 
-import api.pedidos.dto.form.AuthKeycloak;
+import api.pedidos.dto.request.AuthKeycloak;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

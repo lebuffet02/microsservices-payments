@@ -1,9 +1,9 @@
 package api.pedidos.service.impl;
 
 import api.pedidos.client.KeycloakClient;
-import api.pedidos.dto.AuthKeycloakDTO;
-import api.pedidos.dto.form.AuthKeycloak;
-import api.pedidos.dto.form.RefreshKeycloak;
+import api.pedidos.dto.response.AuthKeycloakDTO;
+import api.pedidos.dto.request.AuthKeycloak;
+import api.pedidos.dto.request.RefreshKeycloak;
 import api.pedidos.exception.AuthException;
 import api.pedidos.exception.RefreshException;
 import api.pedidos.exception.ResponseEnum;
@@ -22,7 +22,6 @@ public class AuthServiceImpl implements AuthService {
     KeycloakClient client;
     @Autowired
     MapperAuthKeycloak mapper;
-
 
     @Override
     public AuthKeycloakDTO tokenService(AuthKeycloak authKeycloak) {

@@ -1,8 +1,8 @@
 package api.pedidos.mapper;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoDTO;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import org.springframework.stereotype.Component;
 

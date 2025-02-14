@@ -1,7 +1,7 @@
 package api.pedidos.service;
 
-import api.pedidos.dto.PedidoDTO;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;

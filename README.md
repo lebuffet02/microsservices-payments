@@ -12,7 +12,6 @@
 - Feign Client
 - Eureka Server
 - API Gateway
-- Kafka
 - Docker Compose
 - Mail Sender
 - Junit5
@@ -81,31 +80,6 @@ Clique em 'Authorization', em Bearer Token e cole o token gerado no curl acima. 
 clicar em send que você verá esse response: [] 
 ```
 
-- Execução KAFKA:
-- Substitua os ??? pelo seu usuário e execute os 3 comandos no cmd.
-
-### CMD 1:
-
-```sh
-C:\Users\???\kafka\bin\windows>zookeeper-server-start.bat ../../config/zookeeper.properties
-```
-
-### CMD 2:
-
-```sh
-C:\Users\???\kafka\bin\windows>kafka-server-start.bat ../../config/server.properties
-```
-
-### CMD 3:
-
-```sh
-C:\Users\???\kafka\bin\windows>kafka-topics.bat --bootstrap-server localhost:9092 --describe
-```
-
-```sh
-C:\Users\???\kafka\bin\windows>kafka-topics.bat --bootstrap-server localhost:9092 --topic compras.do.cliente --create --partitions 1
-```
-
 
 - Como utilizar o API-Gateway?
 ```
@@ -144,10 +118,10 @@ junto com a propriedade e porta "spring.mail.port=587". Segue abaixo o exemplo u
 
 - PEDIDOS-MS:
 ```
-Foi realizado 56 testes, resultando em 79% de cobertura.
+Foi realizado 56 testes, resultando em 94% de cobertura.
 ```
 
 - PAGAMENTOS-MS:
 ```
-Foi realizado 42 testes, resultando em 88% de cobertura.
+Foi realizado 41 testes, resultando em 96% de cobertura.
 ```

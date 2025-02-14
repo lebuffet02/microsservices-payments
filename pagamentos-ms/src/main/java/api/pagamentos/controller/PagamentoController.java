@@ -1,7 +1,7 @@
 package api.pagamentos.controller;
 
 import api.pagamentos.documentation.PagamentoDocumentation;
-import api.pagamentos.dto.form.PagamentoForm;
+import api.pagamentos.dto.request.PagamentoRequest;
 import api.pagamentos.service.impl.PagamentoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,8 +29,8 @@ public class PagamentoController implements PagamentoDocumentation {
     @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<?> saveController(
-            @RequestBody PagamentoForm pagamentoForm,
+            @RequestBody PagamentoRequest pagamentoRequest,
             @RequestParam("pedidoId") Long pedidoId) {
-        return ResponseEntity.ok(service.saveService(pagamentoForm, pedidoId));
+        return ResponseEntity.ok(service.saveService(pagamentoRequest, pedidoId));
     }
 }

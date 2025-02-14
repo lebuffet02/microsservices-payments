@@ -1,8 +1,11 @@
 package api.pagamentos.mapper;
 
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.*;
-import api.pagamentos.dto.form.PagamentoForm;
+import api.pagamentos.dto.request.PagamentoRequest;
+import api.pagamentos.dto.response.EnderecoDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PedidoStatusDTO;
+import api.pagamentos.dto.response.UsuarioDTO;
 import api.pagamentos.entity.EnderecoEntity;
 import api.pagamentos.entity.PagamentoEntity;
 import api.pagamentos.entity.UsuarioEntity;
@@ -33,24 +36,20 @@ public class MapperPagamento {
                 .build();
     }
 
-    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoForm pagamentoForm, PedidoStatusDTO pedidoStatusDTO, boolean isAceito) {
+    public PagamentoEntity pagamentoDTOToPagamentoEntity(PagamentoRequest pagamentoRequest, PedidoStatusDTO pedidoStatusDTO, boolean isAceito) {
         return PagamentoEntity.builder()
-                .usuario(toUsuarioEntity(pagamentoForm.usuarioDTO()))
-                .cartao(pagamentoForm.cartao())
-                .parcelas(pagamentoForm.parcelas())
-                .quantidade(pagamentoForm.quantidade())
+                .usuario(toUsuarioEntity(pagamentoRequest.usuarioDTO()))
+                .cartao(pagamentoRequest.cartao())
+                .parcelas(pagamentoRequest.parcelas())
+                .quantidade(pagamentoRequest.quantidade())
                 .nomeProduto(pedidoStatusDTO.nomeProduto())
                 .tipo(pedidoStatusDTO.tipo())
                 .pesoKg(pedidoStatusDTO.pesoKg())
                 .valor(pedidoStatusDTO.valor())
                 .horario(OffsetDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN_TIME)))
                 .status(StatusPedido.PAGO)
-                .isPagamentoAceito(pagamentoFoiAceito(isAceito))
+                .isPagamentoAceito(isAceito)
                 .build();
-    }
-
-    public boolean pagamentoFoiAceito(boolean isAceito) {
-        return isAceito;
     }
 
     private UsuarioEntity toUsuarioEntity(UsuarioDTO usuarioDTO) {

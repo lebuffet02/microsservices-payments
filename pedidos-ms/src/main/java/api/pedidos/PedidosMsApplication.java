@@ -5,10 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableKafka
 @EnableWebMvc
 @EnableFeignClients(basePackages = "api.pedidos.client")
 @EntityScan(basePackages = "api.pedidos.entity")

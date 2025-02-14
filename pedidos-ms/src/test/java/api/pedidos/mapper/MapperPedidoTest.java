@@ -1,7 +1,7 @@
 package api.pedidos.mapper;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoDTO;
+import api.pedidos.dto.response.PedidoDTO;
 import api.pedidos.entity.PedidoEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

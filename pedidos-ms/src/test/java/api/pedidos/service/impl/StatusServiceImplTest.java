@@ -1,7 +1,7 @@
 package api.pedidos.service.impl;
 
 import api.pedidos.constantes.StatusPedido;
-import api.pedidos.dto.PedidoStatusDTO;
+import api.pedidos.dto.response.PedidoStatusDTO;
 import api.pedidos.entity.PedidoEntity;
 import api.pedidos.exception.PedidosException;
 import api.pedidos.mapper.MapperPedido;

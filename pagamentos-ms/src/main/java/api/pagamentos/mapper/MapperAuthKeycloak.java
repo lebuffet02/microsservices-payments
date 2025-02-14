@@ -1,7 +1,7 @@
 package api.pagamentos.mapper;
 
-import api.pagamentos.dto.AuthKeycloakDTO;
-import api.pagamentos.dto.form.AuthKeycloak;
+import api.pagamentos.dto.response.AuthKeycloakDTO;
+import api.pagamentos.dto.request.AuthKeycloak;
 import org.springframework.stereotype.Component;
 
 @Component

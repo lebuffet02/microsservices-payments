@@ -1,10 +1,9 @@
 package api.pedidos.controller;
 
-import api.pedidos.client.KeycloakClient;
 import api.pedidos.documentation.AuthDocumentation;
-import api.pedidos.dto.AuthKeycloakDTO;
-import api.pedidos.dto.form.AuthKeycloak;
-import api.pedidos.dto.form.RefreshKeycloak;
+import api.pedidos.dto.response.AuthKeycloakDTO;
+import api.pedidos.dto.request.AuthKeycloak;
+import api.pedidos.dto.request.RefreshKeycloak;
 import api.pedidos.service.impl.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController implements AuthDocumentation {
 
-    @Autowired
-    KeycloakClient client;
     @Autowired
     AuthServiceImpl serviceImpl;
 

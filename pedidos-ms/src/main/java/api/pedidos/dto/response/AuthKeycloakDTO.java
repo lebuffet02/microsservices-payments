@@ -1,4 +1,4 @@
-package api.pagamentos.dto;
+package api.pedidos.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;

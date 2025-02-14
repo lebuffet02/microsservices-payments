@@ -1,7 +1,7 @@
 package api.pagamentos.documentation;
 
 import api.pagamentos.constantes.StatusPedido;
-import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
 import api.pagamentos.exception.ErrorDetalhes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

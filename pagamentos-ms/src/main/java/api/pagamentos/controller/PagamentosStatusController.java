@@ -2,7 +2,7 @@ package api.pagamentos.controller;
 
 import api.pagamentos.constantes.StatusPedido;
 import api.pagamentos.documentation.PagamentosStatusDocumentation;
-import api.pagamentos.dto.PagamentoStatusDTO;
+import api.pagamentos.dto.response.PagamentoStatusDTO;
 import api.pagamentos.service.impl.StatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
